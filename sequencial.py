@@ -7,38 +7,40 @@ def f(x):
 
 
 def calcula_integral(x0, xn, n):
-    if n == 0:
-        print("Divisão por zero")
-        return
-
-    elif n < 0:
-        print("Intervalo inválido")
-        return
-
     h = (xn - x0) / n
+    x = x0 + h
+
     soma = 0.0
 
-    for i in range(1, n):
-        x = x0 + i * h
+    for _ in range(n-1):
         soma += f(x)
+        x += h
 
     resultado = h * ((f(x0) + f(xn)) / 2 + soma)
 
-    return resultado
+    print("O resultado da integral da função f é:", resultado)
 
 
-if __name__ == "__main__":
+def main():
     x0 = 0
     xn = 1000000
     n = 10000000
 
     start_time = datetime.datetime.now()
 
-    resultado_sequencial = calcula_integral(x0, xn, n)
+    if n == 0:
+        print("Divisão por zero")
+    elif n < 0:
+        print("Intervalo inválido")
+    else:
+        calcula_integral(x0, xn, n)
 
     end_time = datetime.datetime.now()
     time_diff = (end_time - start_time)
     execution_time = time_diff.total_seconds()
 
-    print("O resultado da integral da função f (sequencial) é:", resultado_sequencial)
-    print("Tempo de execução em segundos (sequencial):", execution_time)
+    print("Tempo de execução em segundos:", execution_time)
+
+
+if __name__ == "__main__":
+    main()
